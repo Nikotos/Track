@@ -1,0 +1,2 @@
+Realisation of exception class
+---

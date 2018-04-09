@@ -1,2 +1,2 @@
-# Track
-Projects for TechnoTrack
+# Track 2sem
+Projects for TehnoTrack 2-sem

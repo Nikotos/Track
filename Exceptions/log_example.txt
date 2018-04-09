@@ -1,0 +1,26 @@
+Error in FILE [D:\Study\DeDnDex\Si\Track-2\oak_exception\main.cpp]
+in FUNCTION [void surface_function()]
+in LINE [36]
+Error code is [1]
+Message is <<I dont know, whar happend, but it may be serious>>
+More Info.....
+
+Error in FILE [D:\Study\DeDnDex\Si\Track-2\oak_exception\main.cpp]
+in FUNCTION [void under_surface_function()]
+in LINE [48]
+Error code is [4]
+Message is <<some troubels donwstairs, I dont care>>
+More Info.....
+
+Error in FILE [D:\Study\DeDnDex\Si\Track-2\oak_exception\main.cpp]
+in FUNCTION [void deep_function()]
+in LINE [60]
+Error code is [4]
+Message is <<FALSE IS TRUE, WHAT!?>>
+More Info.....
+
+Error in FILE [D:\Study\DeDnDex\Si\Track-2\oak_exception\main.cpp]
+in FUNCTION [void the_deepest_function()]
+in LINE [69]
+Error code is [42]
+Message is <<FALSE IS TRUE, ZAPUSKAEM GUSYA, RABOTYAGI>>
