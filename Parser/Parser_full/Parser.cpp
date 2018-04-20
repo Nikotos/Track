@@ -106,23 +106,23 @@ Node* Parser::GetV()
 
 
     /* preparing internal buffer for reading*/
-    var_list_->clean_name_buffer();
+    func_list_->clean_name_buffer();
 
 
     for (int i = 0; IS_LETTER && (i < MAX_VAR_NAME_LEN); pos_++, i++)
     {
-        var_list_->name_buffer_[i] = string_[pos_];
+        func_list_->name_buffer_[i] = string_[pos_];
     }
 
     SPACE_CORRECTION
 
     /* such explicit form of code for clarity of code*/
     /* (to upgrade later) */
-    if(var_list_->is_in(var_list_->name_buffer_))
+    if(var_list_->is_in(func_list_->name_buffer_))
     {
-        return new Node(var_list_->get_var(var_list_->name_buffer_));
+        return new Node(var_list_->get_var(func_list_->name_buffer_));
     }
-    else if(func_list_->is_in(var_list_->name_buffer_))
+    else if(func_list_->is_in(func_list_->name_buffer_))
     {
         if (string_[pos_] != '(')
         {
@@ -135,10 +135,10 @@ Node* Parser::GetV()
         node->knot_.storage_.oper_ = CALL;
         Get_func_call(node);
 
-        if (node->left_node_->knot_.storage_.number_ != func_list_->get_param_amount(var_list_->name_buffer_))
+        if (node->left_node_->knot_.storage_.number_ != func_list_->get_param_amount(func_list_->name_buffer_))
         {
             printf("we have - [%d]\n", node->left_node_->knot_.storage_.number_);
-            printf("expected - [%d]\n",func_list_->get_param_amount(var_list_->name_buffer_));
+            printf("expected - [%d]\n",func_list_->get_param_amount(func_list_->name_buffer_));
             THROW(LOGIC_ERROR, "Invalid amount of parameters in function call!", nullptr);
         }
 
@@ -148,10 +148,12 @@ Node* Parser::GetV()
     }
     else if (string_[pos_] == '(')
     {
+        printf("[%s]", func_list_->name_buffer_ );
         THROW(SYNTAX_ERROR, "Undefined function!", nullptr);
     }
     else
     {
+        printf("[%s]", func_list_->name_buffer_ );
         THROW(SYNTAX_ERROR, "Undefined variable!", nullptr);
     }
 
@@ -593,15 +595,14 @@ Command* Parser::Get_command()
         pos_ += 3;
 
         SetVar(INTEGER);
-        text_pos_++;
 
         Command* comm = new Command(VARIABLE_DEFINITION);
-        comm->root_ = new Node(var_list_->get_var(var_list_->name_buffer_));
+        comm->root_ = new Node(var_list_->get_var(func_list_->name_buffer_));
 
         return comm;
 
     }
-    if((strncmp(string_ + pos_, "if(", 3) == 0))
+    else if((strncmp(string_ + pos_, "if(", 3) == 0))
     {
         pos_ += 3;
 
@@ -623,7 +624,7 @@ Command* Parser::Get_command()
 
         return first;
     }
-    if((strncmp(string_ + pos_, "while(", 6) == 0))
+    else if((strncmp(string_ + pos_, "while(", 6) == 0))
     {
         pos_ += 6;
 
@@ -645,6 +646,17 @@ Command* Parser::Get_command()
 
         return first;
     }
+    else if((strncmp(string_ + pos_, "return", 6) == 0))
+    {
+        pos_ += 6;
+
+        auto comm = new Command(RETURN);
+        comm->root_ = GetE();
+
+
+        return comm;
+    }
+
     else
     {
         return new Command(GetA());
@@ -829,7 +841,7 @@ int Parser::Get_func_decl()
         if((strncmp(string_ + pos_, "int", 3) == 0))
         {
             pos_ += 3;
-            
+
             SetVar(INTEGER);
             param_amount++;
 

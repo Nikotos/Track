@@ -1,0 +1,17 @@
+def_int func(int a, int b)
+{
+int y
+y = 5*5
+a = y*7
+return a
+}
+def_int punc()
+{
+int c
+c = 6
+}
+def_int main()
+{
+int c
+c = func(4, 6)
+}

@@ -203,7 +203,7 @@ void Node::set_right(LT object)
 {
     if (right_node_ != nullptr)
     {
-        THROW(LOGIC_ERROR, "Node if alredy exist!", nullptr);
+        THROW(LOGIC_ERROR, "Node if already exist!", nullptr);
     }
 
     else
@@ -360,6 +360,7 @@ void Variable::swap(Variable& that) noexcept
 {
     std::swap(type_, that.type_);
     std::swap(name_, that.name_);
+    std::swap(extra_data_, that.extra_data_);
 }
 
 
